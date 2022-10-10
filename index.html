@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: white;">Interest Calculator</a>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <table class="table">
+        <h4 style="text-align: center;">Interest Calculator</h4>
+        <tbody>
+            <tr>
+                <td>Type of Interest</td>
+                <td><select id="type" class="form-select" onchange="change()" aria-label="Default select example">
+                    <option selected value="1">Simple</option>
+                    <option value="2">Compound</option>
+                  </select></td>
+            </tr>
+            <tr>
+                <td>Principle Amount</td>
+                <td><input class="form-control" type="text" id="amount" placeholder="Principle Amount" aria-label="default input example"></td>
+            </tr>
+            <tr>
+                <td>Time(in Years)</td>
+                <td><input class="form-control" type="text" id="time" placeholder="Time(in Years)" aria-label="default input example"></td>
+            </tr>
+            <tr>
+                <td>Rate(in %)</td>
+                <td><input class="form-control" type="text" id="rate" placeholder="Rate(in %)" aria-label="default input example"></td>
+            </tr>
+            <tr id="hide">
+                <td>Compound Frequency</td>
+                <td><input class="form-control" type="text" id="freq" placeholder="Compound Frequency per year" aria-label="default input example"></td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="button" class="button" onclick="calculate()" value="Calculate"></input>
+    <div class="label input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Total Amount</span>
+        <input type="text" id="total"class="form-control" value=""aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></input>
+    </div>
+    <div class="label input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Interest</span>
+        <input type="text" id="interest"class="form-control" value=""aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></input>
+    </div>
+    <script>
+        function change(){
+            var type=document.querySelector("#type").value;
+            if(type==1){
+                document.getElementById("hide").style.visibility="hidden";
+            }
+            else{
+                document.getElementById("hide").style.visibility="visible";
+            }
+        }
+        function calculate(){
+            var type=document.querySelector("#type").value;
+            var amount=+(document.getElementById("amount").value);
+            var time=+(document.getElementById("time").value);
+            var rate=+(document.getElementById("rate").value);
+            rate/=100;
+            if(isNaN(amount)|| isNaN(time) || isNaN(rate)){
+                window.alert("Enter Correct Values");
+            }
+            else if( type==1){
+            var si=(amount*time*rate);
+            document.getElementById("total").value=(amount+si).toFixed(2);
+            document.getElementById("interest").value=si.toFixed(2);
+            }
+            else if(type==2){
+                var freq=+(document.getElementById("freq").value);
+                if(isNaN(freq)){
+                    window.alert("Enter Correct Values");
+                }
+                else{
+                    var t=rate/freq;
+                    var t1=freq*time;
+                    var ci=(amount*(Math.pow(1+t,t1)));
+                    document.getElementById("total").value=ci.toFixed(2);
+                    document.getElementById("interest").value=(ci.toFixed(2)-amount).toFixed(2);
+                }
+            }
+            else{
+                
+            }
+        }
+    </script>
+</body>
+</html>
